@@ -1,0 +1,22 @@
+{
+  "name": "backbone",
+  "authors": [
+    "micstach <micstach@poczta.onet.pl>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "underscore": "^1.8.3",
+    "backbone": "^1.3.3",
+    "jquery": "^3.0.0"
+  }
+}
