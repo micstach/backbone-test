@@ -2,12 +2,33 @@
   window.App = {
     Models: {},
     Collections: {},
-    Views: {}
+    Views: {},
+    Router: {}
   };
   
   window.template = function(id) {
     return _.template($('#' + id).html());
   };
+
+
+  App.Router = Backbone.Router.extend({
+    routes: {
+      '': 'index',
+      'show/:id': 'show'
+    },
+
+    index: function() {
+      var addPersonView = new App.Views.AddPerson({collection: peopleCollection, readOnly: false});
+      $('.form-div').html(addPersonView.render().el);
+
+      var peopleView = new App.Views.PeopleView({collection: peopleCollection, readOnly: true})         
+      $('.people').html(peopleView.render().el);
+    },
+
+    show: function(id) {
+      console.log(id);
+    }
+  });
 
   App.Models.Person = Backbone.Model.extend({
     defaults: {
@@ -82,13 +103,21 @@
   });
 
   App.Views.AddPerson = Backbone.View.extend({
-    el: '#add-person',
+    el: 'div',
+    
+    template: template('add-person-template'),
 
     initialize: function() {
     },
 
     events: {
       'submit': 'submit'
+    },
+
+    render: function() {
+      this.$el.html( this.template() );
+      
+      return this;
     },
 
     submit: function(e) {

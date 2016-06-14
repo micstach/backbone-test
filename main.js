@@ -9,10 +9,13 @@ var peopleCollection = new App.Collections.PeopleCollection([
   }
 ]);
 
-var peopleView = new App.Views.PeopleView({collection: peopleCollection});
-var addPersonView = new App.Views.AddPerson({collection: peopleCollection});
+// router
+
 
 $(document).ready(function() { 
-  $('.people').html(peopleView.render().el);
+ 
+  new App.Router(); 
+  Backbone.history.start() ;
+  
 });
 
