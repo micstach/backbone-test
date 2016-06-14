@@ -1,48 +1,62 @@
-// main.js
+
 var Person = Backbone.Model.extend({
   defaults: {
     name: 'John Doe',
     age: 30,
     occupation: 'worker'
   }
-  //,
-  // validate: function(attrs) {
-  //   if ( attrs.age < 0 ) {
-  //     return "Age must be positive";
-  //   }
+});
 
-  //   if ( !attrs.name ) {
-  //     return "Person need a correct name";
-  //   }
-  // },
+var PeopleCollection = Backbone.Collection.extend({
+  model: Person
+});
 
-  // work: function() {
-  //   if ( this.get('occupation') ) {
-  //     return this.get('name') + " is working";
-  //   } else { 
-  //     return this.get('name') + " is not working";
-  //   }
-  // }
+var PeopleView = Backbone.View.extend({
+  tagName: 'ul',
+
+  initialize: function() {
+    console.log(this);
+  },
+
+  render: function() {
+    
+    this.collection.each(function(person) {
+      var personView = new PersonView( {model: person} ) ;
+      this.$el.append( personView.render().$el );
+    }, this);
+
+    return this;
+  }
 });
 
 var PersonView = Backbone.View.extend({
   tagName: 'li',
 
-  template: _.template("<strong><%= name %></strong> (<%= age %>)"),
-
-  initialize: function() {
-    this.render();
-  },
+  // optional-> template: '#person-template',
+  template: _.template( $('#person-template').html() ),
 
   render: function() {
-    this.$el.html( this.template(this.model.toJSON()) );
+    // optional->  var template = _.template( $(this.template).html() );
+    this.$el.html( this.template( this.model.toJSON() ) );
+    
+    return this;
   }
 });
 
-var person = new Person();
+var peopleCollection = new PeopleCollection([
+  {
+    name: "Tosia",
+    age: 6
+  },
+  {
+    name: "Julek",
+    age: 5
+  }
+]);
 
-var personView = new PersonView({model: person});
+var peopleView = new PeopleView({collection: peopleCollection});
 
-$(document).ready(function(){ 
-  $(document.body).append(personView.$el);
+$(document).ready(function() { 
+
+  $(document.body).append(peopleView.render().el);
 });
