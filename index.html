@@ -4,10 +4,14 @@
   <body>
     <!-- templates -->
     <script id="person-template" type="text/template">
-      <strong><%= name %></strong> (<%= age %>)
+      <strong><%= name %></strong> (<%= age %>) <button class="delete">Delete</button>
     </script>
 
     <h1>People</h1>
+    <form id="add-person" action="">
+      <input type="text" placeholder="enter name">
+      <input type="submit" value="Add Person">
+    </form>
     <div class="people"></div>
 
     <!-- load scripts -->

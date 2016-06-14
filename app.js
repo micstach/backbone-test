@@ -45,12 +45,28 @@
     // optional-> template: '#person-template',
     template: template('person-template'),
 
+    initialize: function() {
+      this.model.on('change:age', this.render, this);
+      this.model.on('destroy', this.remove, this);
+    },
+
     events: {
-      'click': 'showAlert'
+      'click': 'showAlert',
+      'click .delete': 'destroy'
     },
 
     showAlert: function() {
       console.log('Item clicked !' + JSON.stringify(this.model.toJSON()));
+      var newAge = this.model.get('age') + 1;
+      this.model.set('age', newAge) ;
+    },
+
+    destroy: function() {
+      this.model.destroy();
+    },
+
+    remove: function() {
+      this.$el.remove();
     },
 
     render: function() {
@@ -58,6 +74,21 @@
       this.$el.html( this.template( this.model.toJSON() ) );
       
       return this;
+    }
+  });
+
+  App.Views.AddPerson = Backbone.View.extend({
+    el: '#add-person',
+
+    initialize: function() {
+    },
+
+    events: {
+      'submit': 'submit'
+    },
+
+    submit: function(e) {
+      e.preventDefault();
     }
   });
 
