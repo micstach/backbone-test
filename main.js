@@ -10,6 +10,7 @@ var peopleCollection = new App.Collections.PeopleCollection([
 ]);
 
 var peopleView = new App.Views.PeopleView({collection: peopleCollection});
+var addPersonView = new App.Views.AddPerson({collection: peopleCollection});
 
 $(document).ready(function() { 
   $('.people').html(peopleView.render().el);

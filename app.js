@@ -25,17 +25,21 @@
     tagName: 'ul',
 
     initialize: function() {
-      console.log(this);
+      this.collection.on('add', this.addPerson, this);
     },
 
     render: function() {
       
       this.collection.each(function(person) {
-        var personView = new App.Views.PersonView( {model: person} ) ;
-        this.$el.append( personView.render().el );
+        this.addPerson(person)
       }, this);
 
       return this;
+    },
+
+    addPerson: function(person) {
+        var personView = new App.Views.PersonView( {model: person} ) ;
+        this.$el.append( personView.render().el );
     }
   });
 
@@ -89,7 +93,14 @@
 
     submit: function(e) {
       e.preventDefault();
+
+      var name = $(e.currentTarget).find('input[type=text]').val();
+
+      var person = new App.Models.Person({name: name, age: 1});
+
+      this.collection.add(person);
     }
+
   });
 
 })() ;
