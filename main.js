@@ -22,7 +22,7 @@ var PeopleView = Backbone.View.extend({
     
     this.collection.each(function(person) {
       var personView = new PersonView( {model: person} ) ;
-      this.$el.append( personView.render().$el );
+      this.$el.append( personView.render().el );
     }, this);
 
     return this;
